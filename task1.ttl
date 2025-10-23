@@ -1,0 +1,68 @@
+@prefix : <http://example.org/ontology#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+### Классы
+:Person rdf:type rdfs:Class ;
+        rdfs:label "Person" .
+
+:Organization rdf:type rdfs:Class ;
+              rdfs:label "Organization" .
+
+:Project rdf:type rdfs:Class ;
+         rdfs:label "Project" .
+
+:City rdf:type rdfs:Class ;
+      rdfs:label "City" .
+
+### Связи
+:worksFor rdf:type rdf:Property ;
+          rdfs:domain :Person ;
+          rdfs:range :Organization ;
+          rdfs:label "works for" .
+
+:participatesIn rdf:type rdf:Property ;
+                rdfs:domain :Person ;
+                rdfs:range :Project ;
+                rdfs:label "participates in" .
+
+:locatedIn rdf:type rdf:Property ;
+           rdfs:domain :Organization ;
+           rdfs:range :City ;
+           rdfs:label "located in" .
+
+### Сущности
+:Anna rdf:type :Person ;
+      rdfs:label "Anna" ;
+      :worksFor :TechUniversity ;
+      :participatesIn :SmartCampusProject .
+
+:Igor rdf:type :Person ;
+      rdfs:label "Igor" ;
+      :worksFor :CityHospital ;
+      :participatesIn :HealthAIProject .
+
+:Maria rdf:type :Person ;
+       rdfs:label "Maria" ;
+       :worksFor :TechUniversity ;
+       :participatesIn :HealthAIProject .
+
+:TechUniversity rdf:type :Organization ;
+                rdfs:label "Technical University" ;
+                :locatedIn :Moscow .
+
+:CityHospital rdf:type :Organization ;
+              rdfs:label "City Hospital" ;
+              :locatedIn :SaintPetersburg .
+
+:SmartCampusProject rdf:type :Project ;
+                    rdfs:label "Smart Campus Project" .
+
+:HealthAIProject rdf:type :Project ;
+                 rdfs:label "Health AI Project" .
+
+:Moscow rdf:type :City ;
+        rdfs:label "Moscow" .
+
+:SaintPetersburg rdf:type :City ;
+                 rdfs:label "Saint Petersburg" .

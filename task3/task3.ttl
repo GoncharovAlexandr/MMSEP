@@ -1,0 +1,46 @@
+@prefix : <http://example.org/health#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+############################################################
+# Онтология
+############################################################
+
+<http://example.org/health> rdf:type owl:Ontology .
+
+############################################################
+# Классы
+############################################################
+
+:Patient rdf:type owl:Class .
+:Symptom rdf:type owl:Class .
+
+:Fever rdf:type owl:Class ;
+       rdfs:subClassOf :Symptom .
+
+:Cough rdf:type owl:Class ;
+       rdfs:subClassOf :Symptom .
+
+:HighRiskPatient rdf:type owl:Class ;
+                 rdfs:subClassOf :Patient .
+
+############################################################
+# Объектные свойства
+############################################################
+
+:hasSymptom rdf:type owl:ObjectProperty ;
+            rdfs:domain :Patient ;
+            rdfs:range  :Symptom .
+
+############################################################
+# Индивиды
+############################################################
+
+:John rdf:type :Patient ;
+      :hasSymptom :fever1, :cough1 .
+
+:fever1 rdf:type :Fever .
+:cough1 rdf:type :Cough .

@@ -1,0 +1,85 @@
+@prefix : <http://example.org/health#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix swrl: <http://www.w3.org/2003/11/swrl#> .
+@prefix swrlb: <http://www.w3.org/2003/11/swrlb#> .
+@prefix rdf: <http://www.w3.org/1999/02-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+<http://example.org/health> rdf:type owl:Ontology .
+
+############################################################
+# Классы
+############################################################
+
+:Patient rdf:type owl:Class .
+:Symptom rdf:type owl:Class .
+
+:Fever rdf:type owl:Class ;
+       rdfs:subClassOf :Symptom .
+
+:Cough rdf:type owl:Class ;
+       rdfs:subClassOf :Symptom .
+
+:HighRiskPatient rdf:type owl:Class ;
+                 rdfs:subClassOf :Patient .
+
+############################################################
+# Свойства
+############################################################
+
+:hasSymptom rdf:type owl:ObjectProperty ;
+            rdfs:domain :Patient ;
+            rdfs:range  :Symptom .
+
+############################################################
+# Индивиды
+############################################################
+
+:John rdf:type :Patient ;
+      :hasSymptom :fever1, :cough1 .
+
+:fever1 rdf:type :Fever .
+:cough1 rdf:type :Cough .
+
+############################################################
+# SWRL Rule — классификация пациента
+############################################################
+
+:HighRiskRule rdf:type swrl:Imp ;
+    swrl:body (
+        [
+            rdf:type swrl:ClassAtom ;
+            swrl:classPredicate :Patient ;
+            swrl:argument1 _:p
+        ]
+        [
+            rdf:type swrl:ObjectPropertyAtom ;
+            swrl:propertyPredicate :hasSymptom ;
+            swrl:argument1 _:p ;
+            swrl:argument2 _:s1
+        ]
+        [
+            rdf:type swrl:ClassAtom ;
+            swrl:classPredicate :Fever ;
+            swrl:argument1 _:s1
+        ]
+        [
+            rdf:type swrl:ObjectPropertyAtom ;
+            swrl:propertyPredicate :hasSymptom ;
+            swrl:argument1 _:p ;
+            swrl:argument2 _:s2
+        ]
+        [
+            rdf:type swrl:ClassAtom ;
+            swrl:classPredicate :Cough ;
+            swrl:argument1 _:s2
+        ]
+    ) ;
+    swrl:head (
+        [
+            rdf:type swrl:ClassAtom ;
+            swrl:classPredicate :HighRiskPatient ;
+            swrl:argument1 _:p
+        ]
+    ) .
